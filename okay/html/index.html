@@ -1,0 +1,49 @@
+<template>
+    <div>
+      <input type="text" v-model="searchQuery">
+      <select v-model="selectedColumn">
+        <option v-for="column in columns" :value="column">{{ column }}</option>
+      </select>
+      <table>
+        <thead>
+          <tr>
+            <th v-for="column in columns" :key="column">{{ column }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in filteredItems" :key="item.id">
+            <td v-for="column in columns" :key="column">{{ item[column] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        items: [],
+        searchQuery: '',
+        selectedColumn: 'column1',
+        columns: ['column1', 'column2', 'column3'],
+      }
+    },
+    created() {
+      fetchData().then((data) => {
+        this.items = data;
+        this.columns = Object.keys(data[0]);
+      });
+    },
+    computed: {
+      filteredItems() {
+        if (!this.searchQuery) {
+          return this.items;
+        }
+        const regex = new RegExp(this.searchQuery, 'i');
+        return this.items.filter((item) => regex.test(item[this.selectedColumn]));
+      },
+    },
+  };
+  </script>
+  
