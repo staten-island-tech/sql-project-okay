@@ -20,7 +20,6 @@
 </template>
 
 <script>
-// Initialize Userfront
 Userfront.init('demo1234')
 
 export default {
@@ -32,7 +31,6 @@ export default {
     }
   },
   methods: {
-    // Log in with the form's email/username and password
     loginWithPassword() {
       this.alert = ''
       Userfront.login({
@@ -43,7 +41,6 @@ export default {
         this.alert = error.message
       })
     },
-    // Log in with SSO (google)
     loginWithSSO() {
       Userfront.login({ method: 'google' })
     }
