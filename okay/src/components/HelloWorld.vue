@@ -20,8 +20,7 @@
 </template>
 
 <script>
-Userfront.init('demo1234')
-
+/* Userfront.init('demo1234')
 export default {
   data() {
     return {
@@ -45,7 +44,9 @@ export default {
       Userfront.login({ method: 'google' })
     }
   }
-}
+} */
+
+let { data: books, error } = await supabase.from('books').select('id')
 </script>
 
 <style scoped>
