@@ -46,7 +46,31 @@ export default {
   }
 } */
 
-let { data: books, error } = await supabase.from('books').select('id')
+let { data: books, error } = await supabase.from('books').select('*')
+
+let { data: books, error } = await supabase
+  .from('books')
+  .select('*')
+
+  // Filters
+  .eq('column', 'Equal to')
+  .gt('column', 'Greater than')
+  .lt('column', 'Less than')
+  .gte('column', 'Greater than or equal to')
+  .lte('column', 'Less than or equal to')
+  .like('column', '%CaseSensitive%')
+  .ilike('column', '%CaseInsensitive%')
+  .is('column', null)
+  .in('column', ['Array', 'Values'])
+  .neq('column', 'Not equal to')
+
+  // Arrays
+  .cs('array_column', ['array', 'contains'])
+  .cd('array_column', ['contained', 'by'])
+
+const { data, error } = await supabase
+  .from('books')
+  .insert([{ some_column: 'someValue', other_column: 'otherValue' }])
 </script>
 
 <style scoped>
