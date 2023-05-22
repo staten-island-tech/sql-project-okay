@@ -46,10 +46,9 @@ export default {
   }
 } */
 
-let { data: books, error } = await supabase.from('books').select('*')
-
-let { data: books, error } = await supabase
-  .from('books')
+/* filtering */
+let { data: users, error } = await supabase
+  .from('users')
   .select('*')
 
   // Filters
@@ -68,9 +67,16 @@ let { data: books, error } = await supabase
   .cs('array_column', ['array', 'contains'])
   .cd('array_column', ['contained', 'by'])
 
+/* insert rows */
 const { data, error } = await supabase
-  .from('books')
+  .from('users')
   .insert([{ some_column: 'someValue', other_column: 'otherValue' }])
+
+/* update rows */
+const { data, error } = await supabase
+  .from('users')
+  .update({ other_column: 'otherValue' })
+  .eq('some_column', 'someValue')
 </script>
 
 <style scoped>
