@@ -20,7 +20,7 @@
 </template>
 
 <script>
-/* Userfront.init('demo1234')
+ Userfront.init('demo1234')
 export default {
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
       Userfront.login({ method: 'google' })
     }
   }
-} */
+} 
 
 /* filtering */
 let { data: users, error } = await supabase
