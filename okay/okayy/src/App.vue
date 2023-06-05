@@ -1,63 +1,53 @@
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import SignUp from './components/SignUp.vue';
-import supabase from './supabaseClient'
-/* 
+import HelloWorld from "./components/HelloWorld.vue";
+import SignUp from "./components/SignUp.vue";
+import supabase from "./supabaseClient";
+
 const Home = () => {
-  const [fetchError, setFetchError] = useState(null)
-  const [user, setUser] = useState(text)
-  const [id, setId] = useState(int8)
-  const [password, setPassword] = useState(text)
-  const [email, setEmail] = useState(text)
+  const [fetchError, setFetchError] = useState(null);
+  const [user, setUser] = useState(text);
+  const [id, setId] = useState(int8);
+  const [password, setPassword] = useState(text);
+  const [email, setEmail] = useState(text);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase
-        .from('user')
-        .select()
+      const { data, error } = await supabase.from("user").select();
 
-        if (error) {
-          setFetchError('Could not find the user')
-          setUser(null)
-          console.log(error)
-        }
+      if (error) {
+        setFetchError("Could not find the user");
+        setUser(null);
+        console.log(error);
+      }
 
-        if (data) { 
-          setUser(data)
-          setFetchError(null)
-        }
+      if (data) {
+        setUser(data);
+        setFetchError(null);
+      }
+    };
 
-    }
+    fetchUser();
+  }, []);
+  console.log(Home);
+};
 
-    fetchUser()
-
-  }, [])
-} */
-
-export default{
-  name: 'App',
-  data()
-  { 
+export default {
+  name: "App",
+  data() {
     return {
-      name:"",
-      email:"",
-      password:""
-    }
+      name: "",
+      email: "",
+      password: "",
+    };
   },
-  components:{
-    SignUp
+  components: {
+    SignUp,
   },
 
-  methods:(
-    signUp()
-    (
-      console.warn("signup",this.name,this.email,this.password)
-    )
-  )
-
-}
-
-
+  methods: signUp()(
+    console.warn("signup", this.name, this.email, this.password)
+  ),
+};
 </script>
 
 <template>
@@ -66,7 +56,7 @@ export default{
     <input type="text" v-model="name" placeholder="Enter Name" />
     <input type="text" v-model="email" placeholder="Enter Email" />
     <input type="password" v-model="password" placeholder="Enter Password" />
-    <button v-on:click="signUp" >Sign Up!</button>
+    <button v-on:click="signUp">Sign Up!</button>
 
     <!-- 
     <a href="https://vitejs.dev" target="_blank">
@@ -86,7 +76,7 @@ export default{
   will-change: filter;
   transition: filter 300ms;
 }
-.register input{
+.register input {
   width: 300px;
   height: 50px;
   padding-left: 30px;
@@ -97,7 +87,7 @@ export default{
   border: 2px solid rgb(25, 25, 25);
 }
 
-.register button{
+.register button {
   width: 300px;
   height: 40px;
   border: 2px solid rgb(25, 25, 25);
