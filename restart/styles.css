@@ -1,0 +1,12 @@
+.mains{
+    background-color: #116247;
+}
+
+.app{
+    margin-top: -30px;
+    background-color:hsl(157, 73%, 55%);
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    bottom:90%;
+}

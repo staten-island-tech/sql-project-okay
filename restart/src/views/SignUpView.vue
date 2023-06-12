@@ -1,0 +1,102 @@
+<script>
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://lkfdrqoayqeodntjklhk.supabase.co'
+const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrZmRycW9heXFlb2RudGprbGhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MjU5NjEsImV4cCI6MTk5OTMwMTk2MX0.Nnia_31--mSH_S4xwIC08lvP956aV3qD-XDNVv_Mhxc'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      passwordConfirmed: ''
+    }
+  },
+  methods: {
+    async signup(event) {
+      event.preventDefault()
+
+      const user_email = this.email
+      const user_password = this.password
+      const user_passwordConfirmed = this.passwordConfirmed
+      const message = document.getElementById('msg')
+
+      if (user_password === user_passwordConfirmed) {
+        console.log(true)
+
+        if (user_email === '' || user_password === '') {
+          message.insertAdjacentHTML('afterbegin', `<h3> Please input Email and/or Password </h3>`)
+        } else {
+          try {
+            const { user, error } = await supabase.auth.signUp({
+              email: user_email,
+              password: user_password
+            })
+
+            if (error) {
+              console.error(error)
+            } else {
+              const { error } = await supabase.auth.signInWithPassword(user_email, user_password)
+
+              if (error) {
+                console.error(error)
+              } else {
+                console.log(user.id)
+                await supabase
+                  .from('user_data')
+                  .insert([{ user_id: user.id, email: user_email, password: user_password }])
+              }
+            }
+            message.insertAdjacentHTML(
+              'afterbegin',
+              `<h3> Successfully made an account. Now LogIn </h3>`
+            )
+          } catch (error) {
+            console.error(error)
+          }
+        }
+      } else {
+        console.log('Passwords do not match.')
+        message.insertAdjacentHTML('afterbegin', `<h3> Passwords do not match </h3>`)
+      }
+    }
+  }
+}
+</script>
+
+<template>
+  <form class="loginForm">
+    <div class="email">
+      <input type="text" v-model="email" placeholder="Enter Email" />
+    </div>
+    <div>
+      <input type="password" v-model="password" placeholder="Enter Password" />
+    </div>
+    <div>
+      <input type="password" v-model="passwordConfirmed" placeholder="Confirm Password" />
+    </div>
+    <button id="signupbtn" @click="signup">Sign Up</button>
+    <span
+      >Already have an account? <a><RouterLink to="/loginView">Login</RouterLink></a></span
+    >
+    <h3 class="message" id="msg"></h3>
+  </form>
+</template>
+
+<style>
+.loginForm {
+  border: black 3px solid;
+  background-color: black;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  width: 20%;
+  height: auto;
+}
+
+.message {
+  color: white;
+}
+</style>
